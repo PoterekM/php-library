@@ -37,7 +37,7 @@
             }
 
         }
-            
+
         static function getAll()
         {
            $returned_books = $GLOBALS['DB']->query("SELECT * FROM books;");
@@ -60,6 +60,33 @@
                 return false;
             }
         }
+
+        static function find($search_id)
+        {
+            $returned_books = $GLOBALS['DB']->prepare("SELECT * FROM books WHERE id = :id");
+            $returned_books->bindParam(':id', $search_id, PDO::PARAM_STR);
+            $returned_books->execute();
+            foreach ($returned_books as $book) {
+              $book_title = $book['book_title'];
+              $id = $book['id'];
+              if ($id == $search_id) {
+                  $found_book = new Book($book_title, $id);
+              }
+            }
+            return $found_book;
+        }
+
+        function update($new_book_title)
+        {
+            $executed = $GLOBALS['DB']->exec("UPDATE books SET book_title = '{$new_book_title}' WHERE id = {$this->getId()};");
+            if ($executed) {
+             $this->setBookTitle($new_book_title);
+             return true;
+            } else {
+             return false;
+            }
+        }
+
 
     }
  ?>

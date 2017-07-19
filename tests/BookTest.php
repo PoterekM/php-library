@@ -73,12 +73,12 @@
         {
             //Arrange
            $book_title = "Raven";
-           $test_course = new Book($book_title);
-           $test_course->save();
+           $test_title = new Book($book_title);
+           $test_title->save();
 
            $book_title_2 = "Well";
-           $test_course_2 = new Book($book_title_2);
-           $test_course_2->save();
+           $test_title_2 = new Book($book_title_2);
+           $test_title_2->save();
 
            //Act
            Book::deleteAll();
@@ -86,6 +86,35 @@
            //Assert
            $this->assertEquals([], $result);
         }
+
+        function testFind()
+        {
+          //Arrange
+          $book_title = "Raven";
+          $test_title = new Book($book_title);
+          $test_title->save();
+
+          $book_title_2 = "Pooh";
+          $test_title_2 = new Book($book_title_2);
+          $test_title_2->save();
+          //Act
+          $result = Book::find($test_title->getId());
+          //Assert
+          $this->assertEquals($test_title, $result);
+         }
+
+        function testUpdate()
+        {
+          //Arrange
+          $book_title = "Raven";
+          $test_title = new Book($book_title);
+          $test_title->save();
+          $new_book_title = "Pooh";
+          //Act
+          $test_title->update($new_book_title);
+          //Assert
+          $this->assertEquals("Pooh", $test_title->getBookTitle());
+          }
     }
 
 
