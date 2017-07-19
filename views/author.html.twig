@@ -19,8 +19,8 @@
         <h4>Add a book:</h4>
 
         <form action='/add_books' method='post'>
-            <input id="author_id" name="author_id" type="hidden" value="{{ author.getId }}">
-            <label for="book_id">Select a student</label>
+            <input id="author_id" name="author_id" type="hidden" value="{{ author.getId }}"></input>
+            <label for="book_id"></label>
             <select id='book_id' name='book_id' type='text'>
               {% for book in all_books %}
                 <option value="{{ book.getId }}"> {{ book.getBookTitle }}</option>

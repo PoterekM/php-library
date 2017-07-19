@@ -9,20 +9,20 @@
             {% if authors is not empty %}
                 <p>authors:</p>
                 <ul>
-                    {% for authors in authorss %}
-                    <li>{{ authors.getAuthorName }} </li>
+                    {% for author in authors %}
+                    <li>{{ author.getAuthorName }} </li>
                     {% endfor %}
                 </ul>
             {% endif %}
 
     <h4>Add a authors</h4>
 
-    <form action='/add_authorss' method='post'>
-        <input id="book_id" name="book_id" type="hidden" value="{{ book.getId }}">
-        <label for='authors_id'>Select a authors:</label>
-        <select id='authors_id' name='authors_id' type='text'>
-            {% for authors in all_authorss %}
-              <option value="{{ authors.getId }}"> {{ authors.getAuthorName }} </option>
+    <form action='/add_authors' method='post'>
+        <input id="book_id" name="book_id" type="hidden" value="{{ book.getId }}"></input>
+        <label for='author_id'>Select an author:</label>
+        <select id='author_id' name='author_id' type='text'>
+            {% for author in all_authors %}
+              <option value="{{ author.getId }}"> {{ author.getAuthorName }} </option>
             {% endfor %}
         </select>
         <button type="submit">Add author</button>
