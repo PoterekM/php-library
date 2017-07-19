@@ -16,7 +16,17 @@
 
     $app->get("/", function() use ($app) {
         return $app['twig']->render('index.html.twig', array('authors' => Author::getAll(), 'books' => Book::getAll()));
+    });
 
+    $app->get("/authors", function() use ($app) {
+        return $app['twig']->render('authors.html.twig', array('authors' => Author::getAll()));
+    });
+
+    $app->post("/authors", function() use ($app) {
+        $author_name = $_POST['author_name'];
+        $new_author = new Author($author_name, $id = null);
+        $new_author->save();
+        return $app['twig']->render('authors.html.twig', array('authors' => Author::getAll()));
     });
       return $app;
     ?>
