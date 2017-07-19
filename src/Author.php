@@ -18,7 +18,7 @@
 
         function setAuthorName($new_author_name)
         {
-            $this->author_name = $new_author_name;
+            $this->author_name = (string) $new_author_name;
         }
 
         function getId()
@@ -28,13 +28,13 @@
 
         function save()
         {
-            $ececuted = $GLOBALS['DB']->exec("INSERT INTO author (author_name) VALUES ('{$this->getAuthorName}')");
+            $executed = $GLOBALS['DB']->exec("INSERT INTO author (author_name) VALUES ('{$this->getAuthorName()}');");
             if ($executed) {
                 $this->id = $GLOBALS['DB']->lastInsertId();
                 return true;
             } else {
                 return false;
             }
-        }   
+        }
     }
  ?>
