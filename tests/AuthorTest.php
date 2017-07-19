@@ -4,7 +4,7 @@
     * @backupStaticAttributes disabled
     */
     require_once "src/Author.php";
-    // require_once "src/Book.php";
+    require_once "src/Book.php";
     $server = 'mysql:host=localhost:8889;dbname=library';
     $username = 'root';
     $password = 'root';
@@ -40,6 +40,7 @@
            //Assert
            $this->assertEquals(true, is_numeric($result));
        }
+
 
        function testSave()
        {

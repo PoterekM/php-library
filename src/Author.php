@@ -28,7 +28,7 @@
 
         function save()
         {
-            $executed = $GLOBALS['DB']->exec("INSERT INTO author (author_name) VALUES ('{$this->getAuthorName()}');");
+            $executed = $GLOBALS['DB']->exec("INSERT INTO authors (author_name) VALUES ('{$this->getAuthorName()}');");
             if ($executed) {
                 $this->id = $GLOBALS['DB']->lastInsertId();
                 return true;
