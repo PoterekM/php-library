@@ -87,6 +87,20 @@
             }
         }
 
+        function delete()
+      {
+          $executed = $GLOBALS['DB']->exec("DELETE FROM books WHERE id = {$this->getId()};");
+          if (!$executed) {
+              return false;
+          }
+          $executed = $GLOBALS['DB']->exec("DELETE FROM authors_books WHERE book_id = {$this->getId()};");
+          if (!$executed) {
+              return false;
+          } else {
+              return true;
+          }
+      }
+
 
     }
  ?>

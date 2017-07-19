@@ -116,6 +116,25 @@
           $this->assertEquals("Wells", $test_author->getAuthorName());
           }
 
+          function testDelete()
+          {
+          //Arrange
+          $author_name = "Poe";
+          $test_author = new Author($author_name);
+          $test_author->save();
+
+          $author_name_2 = "Wells";
+          $test_author_2 = new Author($author_name_2);
+
+          $test_author_2->save();
+          //Act
+          
+          $test_author->delete();
+          //Assert
+
+          $this->assertEquals([$test_author_2], Author::getAll());
+          }
+
 
     }
 

@@ -114,7 +114,26 @@
           $test_title->update($new_book_title);
           //Assert
           $this->assertEquals("Pooh", $test_title->getBookTitle());
-          }
+        }
+
+        function testDelete()
+        {
+        //Arrange
+        $book_title = "Raven";
+        $test_title = new Book($book_title);
+        $test_title->save();
+
+        $book_title_2 = "Pooh";
+        $test_title_2 = new Book($book_title_2);
+
+        $test_title_2->save();
+        //Act
+
+        $test_title->delete();
+        //Assert
+
+        $this->assertEquals([$test_title_2], Book::getAll());
+        }
     }
 
 
