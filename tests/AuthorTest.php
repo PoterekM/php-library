@@ -140,16 +140,16 @@
             //Arrange
             $author_name = "Poe";
             $id = null;
-            $test_author = new Author($author_name, $code, $id);
+            $test_author = new Author($author_name, $id);
             $test_author->save();
 
             $book_title = "Raven";
             $id = null;
             $test_book = new Book($book_title, $id);
             $test_book->save();
-            $book_book_title_2 = "Pooh";
+            $book_title_2 = "Pooh";
             $id_2 = null;
-            $test_book_2 = new Book($book_book_title_2, $id_2);
+            $test_book_2 = new Book($book_title_2, $id_2);
             $test_book_2->save();
 
             //Act
@@ -159,6 +159,27 @@
 
             $this->assertEquals($test_author->getBooks(), [$test_book, $test_book_2]);
         }
+
+        function testAddBooks()
+        {
+            //Arrange
+            $author_name = "Poe";
+            $id = null;
+            $test_author = new Author($author_name, $id);
+            $test_author->save();
+
+            $book_title = "Nathan";
+            $id = null;
+            $test_book = new Book($book_title, $id);
+            $test_book->save();
+
+            //Act
+
+            $test_author->addBook($test_book);
+            //Assert
+            $this->assertEquals($test_author->getBooks(), [$test_book]);
+        }
+
 
 
     }

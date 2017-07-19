@@ -105,21 +105,21 @@
         {
             $returned_authors = $GLOBALS['DB']->query("SELECT authors.* FROM books
             JOIN authors_books ON (authors_books.book_id = books.id)
-            JOIN books ON (authors.id = authors_books.author_id)
+            JOIN authors ON (authors.id = authors_books.author_id)
             WHERE books.id = {$this->getId()};");
             $authors = array();
             foreach ($returned_authors as $author) {
-            $author_name = $author['author_name'];
-            $id = $author['id'];
-            $new_author = new Author($author_name, $id);
-            array_push($authors, $new_author);
+                $author_name = $author['author_name'];
+                $id = $author['id'];
+                $new_author = new Author($author_name, $id);
+                array_push($authors, $new_author);
             }
             return $authors;
         }
-        
+
         function addAuthor($author)
         {
-            $executed = $GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, book_id) VALUES ({$this->getId()}, {$author->getId()});");
+            $executed = $GLOBALS['DB']->exec("INSERT INTO authors_books (book_id, author_id) VALUES ({$this->getId()}, {$author->getId()});");
             if ($executed) {
             return true;
             } else {
