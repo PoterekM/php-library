@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title>Library</title>
+</head>
+<body>
+  <div class="container">
+    <h1>This person?</h1>
+    {% if authors is empty %}
+    <h1>Can't find them!</h1>
+    {% else %}
+    {% for author in authors %}
+    <ul>
+      <li>{{ author.getAuthorName }}</li>
+
+    </ul>
+    {% endfor %}
+    {% endif %}
+    <p><a href='/'>Home</a></p>
+  </div>
+</body>
+</html>

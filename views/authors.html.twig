@@ -21,6 +21,12 @@
 
               <button type='submit'>Add Author</button>
           </form>
+          <form action="/search" method="post">
+            <label for="author_search">Which author?</label>
+            <input type="text" name="author_search" id="author_search" required>
+            <button type='submit'>Look for Author</button>
+          </form>
+
           <form action='/delete_authors' method='post'>
               <button type='submit' class='btn-info'>Clear</button>
           </form>

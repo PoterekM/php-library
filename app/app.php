@@ -95,5 +95,9 @@
       return $app['twig']->render('index.html.twig');
     });
 
+    $app->get("/search{id}", function() use ($app) {
+        $author = Author::find($id);
+        return $app['twig']->render('search.html.twig', array('authors' =>Author::getAll()));
+    });
       return $app;
 ?>
