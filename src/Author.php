@@ -87,18 +87,44 @@
         }
 
         function delete()
-      {
-          $executed = $GLOBALS['DB']->exec("DELETE FROM authors WHERE id = {$this->getId()};");
-          if (!$executed) {
+        {
+            $executed = $GLOBALS['DB']->exec("DELETE FROM authors WHERE id = {$this->getId()};");
+            if (!$executed) {
               return false;
-          }
-          $executed = $GLOBALS['DB']->exec("DELETE FROM authors_books WHERE author_id = {$this->getId()};");
-          if (!$executed) {
+            }
+            $executed = $GLOBALS['DB']->exec("DELETE FROM authors_books WHERE author_id = {$this->getId()};");
+            if (!$executed) {
               return false;
-          } else {
+            } else {
               return true;
-          }
-      }
+            }
+        }
+
+      function getBooks()
+       {
+           $returned_books = $GLOBALS['DB']->query("SELECT books.* FROM authors
+               JOIN courses_books ON (authors_books.author_id = authors.id)
+               JOIN books ON (books.id = authors_books.book_id)
+               WHERE authors.id = {$this->getId()};");
+           $books = array();
+           foreach ($returned_books as $book) {
+               $book_title = $book['book_title'];
+               $id = $book['id'];
+               $new_book = new Book($book_name, $book_enroll_date, $id);
+               array_push($books, $new_book);
+           }
+           return $books;
+       }
+
+       function addBook($book)
+       {
+           $executed = $GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, book_id) VALUES ({$this->getId()}, {$book_title->getId()});");
+           if ($executed) {
+               return true;
+           } else {
+               return false;
+           }
+       }
 
     }
  ?>

@@ -89,51 +89,76 @@
 
         function testFind()
         {
-          //Arrange
-          $author_name = "Poe";
-          $test_author = new Author($author_name);
-          $test_author->save();
+            //Arrange
+            $author_name = "Poe";
+            $test_author = new Author($author_name);
+            $test_author->save();
 
-          $author_name_2 = "Wells";
-          $test_author_2 = new Author($author_name_2);
-          $test_author_2->save();
-          //Act
-          $result = Author::find($test_author->getId());
-          //Assert
-          $this->assertEquals($test_author, $result);
+            $author_name_2 = "Wells";
+            $test_author_2 = new Author($author_name_2);
+            $test_author_2->save();
+            //Act
+            $result = Author::find($test_author->getId());
+            //Assert
+            $this->assertEquals($test_author, $result);
          }
 
         function testUpdate()
         {
-          //Arrange
-          $author_name = "Poe";
-          $test_author = new Author($author_name);
-          $test_author->save();
-          $new_author_name = "Wells";
-          //Act
-          $test_author->update($new_author_name);
-          //Assert
-          $this->assertEquals("Wells", $test_author->getAuthorName());
-          }
+            //Arrange
+            $author_name = "Poe";
+            $test_author = new Author($author_name);
+            $test_author->save();
+            $new_author_name = "Wells";
+            //Act
+            $test_author->update($new_author_name);
+            //Assert
+            $this->assertEquals("Wells", $test_author->getAuthorName());
+            }
 
-          function testDelete()
-          {
-          //Arrange
-          $author_name = "Poe";
-          $test_author = new Author($author_name);
-          $test_author->save();
+        function testDelete()
+        {
+            //Arrange
+            $author_name = "Poe";
+            $test_author = new Author($author_name);
+            $test_author->save();
 
-          $author_name_2 = "Wells";
-          $test_author_2 = new Author($author_name_2);
+            $author_name_2 = "Wells";
+            $test_author_2 = new Author($author_name_2);
 
-          $test_author_2->save();
-          //Act
-          
-          $test_author->delete();
-          //Assert
+            $test_author_2->save();
+            //Act
 
-          $this->assertEquals([$test_author_2], Author::getAll());
-          }
+            $test_author->delete();
+            //Assert
+
+            $this->assertEquals([$test_author_2], Author::getAll());
+        }
+
+        function testGetBooks()
+        {
+            //Arrange
+            $author_name = "Poe";
+            $id = null;
+            $test_author = new Author($author_name, $code, $id);
+            $test_author->save();
+
+            $book_title = "Raven";
+            $id = null;
+            $test_book = new Book($book_title, $id);
+            $test_book->save();
+            $book_book_title_2 = "Pooh";
+            $id_2 = null;
+            $test_book_2 = new Book($book_book_title_2, $id_2);
+            $test_book_2->save();
+
+            //Act
+            $test_author->addBook($test_book);
+            $test_author->addBook($test_book_2);
+            //Assert
+
+            $this->assertEquals($test_author->getBooks(), [$test_book, $test_book_2]);
+        }
 
 
     }
