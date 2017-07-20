@@ -10,10 +10,13 @@
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
-
+    // use Symfony\Component\Debug\Debug;
+    //     Debug::enable();
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' =>__DIR__.'/../views'
     ));
+    //  $app['debug'] = true;
+
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
@@ -95,9 +98,19 @@
       return $app['twig']->render('index.html.twig');
     });
 
-    $app->get("/search{id}", function() use ($app) {
-        $author = Author::find($id);
-        return $app['twig']->render('search.html.twig', array('authors' =>Author::getAll()));
+    $app->get("/search_author", function() use ($app) {
+        $authors = Author::getAll();
+        $author_search = array();
+
+        if(empty($author_search) == true) {
+            foreach ($authors as $author) {
+                if ($author->getAuthorName() == $_GET['author_search']) {
+                    array_push($author_search, $author);
+                }
+            }
+        }
+        return $app['twig']->render('search_author.html.twig', array('author' => $author_search));
     });
+
       return $app;
 ?>
