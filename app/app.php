@@ -117,10 +117,16 @@
         return $app['twig']->render('patrons.html.twig', array('patrons' => Patron::getAll()));
     });
 
+
     $app->post("/patrons", function() use ($app) {
        $patron = new Patron($_POST['patron']);
        $patron->save();
        return $app['twig']->render('patrons.html.twig', array('patrons' => Patron::getAll()));
+    });
+
+    $app->get("/patron/{id}", function($id) use ($app) {
+        $patron = Patron::find($id);
+        return $app['twig']->render('patron.html.twig', array('patron' => $patron));
     });
 
       return $app;

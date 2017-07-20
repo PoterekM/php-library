@@ -10,7 +10,7 @@
         <p>Here are all of your library members!</p>
         <ul>
             {% for patron in patrons %}
-            <li><a href="/patrons/{{ patron.getId }}"> {{ patron.getName }}</a></li>
+            <li><a href="/patron/{{ patron.getId }}"> {{ patron.getName }}</a></li>
             {% endfor %}
         </ul>
         {% endif %}
