@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Library Patrons</title>
+    </head>
+    <body>
+        <h1>Patrons</h1>
+
+        {% if patrons is not empty %}
+        <p>Here are all of your library members!</p>
+        <ul>
+            {% for patron in patrons %}
+            <li><a href="/patrons/{{ patron.getId}}">{{ patron.getName }}</a></li>
+        </ul>
+
+        <form action="/patrons" method="post">
+            <input type="text" name="patron" id="patron" required>
+            <label for="patron">Please enter your name: </label>
+            <button type="submit">Enter the dragon!</button>
+        </form>
+
+
+    <p><a href='/'>Home</a></p>
+    </body>
+</html>

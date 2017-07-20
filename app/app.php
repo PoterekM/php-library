@@ -3,6 +3,8 @@
     require_once __DIR__."/../vendor/autoload.php";
     require_once __DIR__."/../src/Author.php";
     require_once __DIR__."/../src/Book.php";
+    require_once __DIR__."/../src/Patron.php";
+
 
     $app = new Silex\Application();
 
@@ -21,7 +23,7 @@
     Request::enableHttpMethodParameterOverride();
 
     $app->get("/", function() use ($app) {
-        return $app['twig']->render('index.html.twig', array('authors' => Author::getAll(), 'books' => Book::getAll()));
+        return $app['twig']->render('index.html.twig', array('authors' => Author::getAll(), 'books' => Book::getAll(), 'patrons' => Patron::getAll()));
     });
 
     $app->get("/authors", function() use ($app) {
@@ -33,7 +35,6 @@
         $new_author = new Author($author_name, $id = null);
         $new_author->save();
         return $app['twig']->render('authors.html.twig', array('authors' => Author::getAll()));
-
     });
 
     $app->get("/authors/{id}", function($id) use ($app) {
@@ -110,6 +111,10 @@
             }
         }
         return $app['twig']->render('search_author.html.twig', array('author' => $author_search));
+    });
+
+    $app->get("/patrons", function () use ($app) {
+        return $app['twig']->render('patrons.html.twig', array('patrons' => Patron::getAll()));
     });
 
       return $app;
