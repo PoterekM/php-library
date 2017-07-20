@@ -4,6 +4,7 @@
     require_once __DIR__."/../src/Author.php";
     require_once __DIR__."/../src/Book.php";
     require_once __DIR__."/../src/Patron.php";
+    require_once __DIR__."/../src/Copies.php";
 
 
     $app = new Silex\Application();
@@ -57,7 +58,7 @@
     });
 
     $app->get("/books", function() use ($app) {
-       return $app['twig']->render('books.html.twig', array('books' => Book::getAll()));
+       return $app['twig']->render('books.html.twig', array('books' => Book::getAll(), 'copies' => Copies::getAll()));
     });
 
     $app->get("/books/{id}", function($id) use ($app) {
@@ -65,6 +66,9 @@
        return $app['twig']->render('book.html.twig', array('book' => $book, 'authors' => $book->getAuthors(), "all_authors" => Author::getAll()));
     });
 
+    // $app->get("/copies", function() use ($app) {
+    //     return $app['twig']->render('books.html.twig', array('copies' => Copies::getAll()));
+    // });
     $app->post("/books", function() use ($app) {
        $book = new Book($_POST['title']);
        $book->save();
@@ -128,6 +132,7 @@
         $patron = Patron::find($id);
         return $app['twig']->render('patron.html.twig', array('patron' => $patron));
     });
+
 
       return $app;
 ?>
