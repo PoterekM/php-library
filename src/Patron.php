@@ -75,6 +75,59 @@
             return $found_patron;
         }
 
+        function update($new_patron)
+        {
+            $executed = $GLOBALS['DB']->exec("UPDATE patrons SET name = '{$new_patron}' WHERE id = {$this->getId()};");
+            if ($executed) {
+             $this->setName($new_patron);
+             return true;
+            } else {
+             return false;
+            }
+        }
+
+        function delete()
+        {
+          $executed = $GLOBALS['DB']->exec("DELETE FROM patrons WHERE id = {$this->getId()};");
+          if (!$executed) {
+              return false;
+          }
+          $executed = $GLOBALS['DB']->exec("DELETE FROM books_patrons WHERE patron_id = {$this->getId()};");
+          if (!$executed) {
+              return false;
+          } else {
+              return true;
+          }
+        }
+
+        function getBooks()
+        {
+            $returned_books = $GLOBALS['DB']->query("SELECT books.* FROM patrons
+            JOIN books_patrons ON (books_patrons.patron_id = patrons.id)
+            JOIN books ON (books.id = books_patrons.book_id)
+            WHERE patrons.id = {$this->getId()};");
+            $books = array();
+            foreach ($returned_books as $book) {
+                $book_title = $book['book_title'];
+                $id = $book['id'];
+                $new_book = new Book($book_title, $id);
+                array_push($books, $new_book);
+            }
+            return $books;
+        }
+
+        function addBook($book)
+        {
+            $executed = $GLOBALS['DB']->exec("INSERT INTO books_patrons (patron_id, book_id) VALUES ({$this->getId()}, {$book->getId()});");
+            if ($executed) {
+            return true;
+            } else {
+            return false;
+            }
+        }
+
+
+
 
 
     }
