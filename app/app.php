@@ -12,12 +12,12 @@
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
-    // use Symfony\Component\Debug\Debug;
-    //     Debug::enable();
+    use Symfony\Component\Debug\Debug;
+        Debug::enable();
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' =>__DIR__.'/../views'
     ));
-    //  $app['debug'] = true;
+     $app['debug'] = true;
 
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
@@ -115,6 +115,12 @@
 
     $app->get("/patrons", function () use ($app) {
         return $app['twig']->render('patrons.html.twig', array('patrons' => Patron::getAll()));
+    });
+
+    $app->post("/patrons", function() use ($app) {
+       $patron = new Patron($_POST['patron']);
+       $patron->save();
+       return $app['twig']->render('patrons.html.twig', array('patrons' => Patron::getAll()));
     });
 
       return $app;
